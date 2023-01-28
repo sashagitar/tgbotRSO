@@ -1,5 +1,8 @@
 package intellect
 
+// переделать ответ + кнопки в формат массива
+// получить информацию - сохранение введённого сообщения
+
 import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
@@ -64,7 +67,7 @@ func (p *Params) getInfo(msg string) (string, *tgbotapi.ReplyKeyboardMarkup, err
 		
 		Знаю, что они работают в поездах по всей России. 
 		Без проводников не могла бы существовать железная дорога.`, nil, nil
-	case msg == "серво":
+	case msg == "ССервО":
 		return `Я состою в педагогическом отряде, поэтому мало знаю про сервисные. 
 		
 		Знаю, что они работают по всей России. 
@@ -156,8 +159,9 @@ func (p *Params) lvl2(msg string) (string, *tgbotapi.ReplyKeyboardMarkup, error)
 				tgbotapi.NewKeyboardButton("ССО"),
 				tgbotapi.NewKeyboardButton("СПО"),
 				tgbotapi.NewKeyboardButton("ССхО"),
-				tgbotapi.NewKeyboardButton("СОП"),
-				tgbotapi.NewKeyboardButton("Серво"),
+				tgbotapi.NewKeyboardButton("СОП")),
+			tgbotapi.NewKeyboardButtonRow(
+				tgbotapi.NewKeyboardButton("ССервО"),
 				tgbotapi.NewKeyboardButton("СМО"),
 				tgbotapi.NewKeyboardButton("ТОП"),
 				tgbotapi.NewKeyboardButton("Спец"),
