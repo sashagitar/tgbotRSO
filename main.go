@@ -7,7 +7,7 @@ import (
 )
 
 const api_tg_my = " "
-const api_tg = " "
+const api_tg = "5710143526:AAH6SoHEK_eFQJm_CNCHciYSaMgJl0sa4MQ"
 
 func main() {
 	fmt.Printf("%s\n", api_tg)
