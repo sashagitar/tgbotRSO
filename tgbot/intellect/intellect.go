@@ -18,7 +18,7 @@ var errmsg = `К сожалению, ответа на этот вопрос я 
 
 // Приветственное сообщение
 var help = `Привет! Меня зовут Движ. 
-Я здесь для того, чтобы рассказать тебе про мой любимый отряд — сводный студенческий педагогический отряд «Движники».  
+Я здесь для того, чтобы рассказать тебе про мой любимый отряд — Сводный студенческий педагогический отряд «Движники».  
 
 Про что ты хочешь узнать подробнее?`
 
@@ -86,10 +86,11 @@ func (p *Params) getInfo(msg string) (string, *tgbotapi.ReplyKeyboardMarkup, err
 		
 		Каждое направление профильных отрядов занимается чем-то особенным. Раньше медицинские отряды тоже были профильным направлением, но со временем количество бойцов СМО увеличилось и их вывели в отдельное направление.`, nil, nil
 	case msg == "А что там можно было спросить раньше?":
-		p.sost[0] = 1
+		answ := `Вот вопросики, к которым тебе захотелось вернуться. Задавай, а я отвечу:`
+		p.sost[0] = 0
 		p.sost[1] = 0
 
-		return help, p.baseKeyboard(), nil
+		return answ, p.baseKeyboard(), nil
 	}
 
 	return errmsg, nil, nil
@@ -107,10 +108,11 @@ func (p *Params) getInfoForZnam(msg string) (string, *tgbotapi.ReplyKeyboardMark
 		return answ, nil, nil
 	}
 	if msg == "А что там можно было спросить раньше?" {
-		p.sost[0] = 1
+		answ := `Вот вопросики, к которым тебе захотелось вернуться. Задавай, а я отвечу:`
+		p.sost[0] = 0
 		p.sost[1] = 0
 
-		return help, p.baseKeyboard(), nil
+		return answ, p.baseKeyboard(), nil
 	}
 
 	return help, nil, nil
@@ -208,16 +210,17 @@ func (p *Params) lvl2(msg string) (string, *tgbotapi.ReplyKeyboardMarkup, error)
 			
 			Я могу рассказать про каждое направление немного подробнее 
 			Напиши их краткое название (то что в скобочках)`
-		p.sost[0] = 3
+		p.sost[0] = 2
 		p.sost[1] = 1
 
 		return answ, &butKeyboard, nil
 
 	case msg == "А что там можно было спросить раньше?":
-		p.sost[0] = 1
+		answ := `Вот вопросики, к которым тебе захотелось вернуться. Задавай, а я отвечу:`
+		p.sost[0] = 0
 		p.sost[1] = 0
 
-		return help, p.baseKeyboard(), nil
+		return answ, p.baseKeyboard(), nil
 	}
 
 	return errmsg, nil, nil
@@ -321,8 +324,8 @@ func (p *Params) GetAnswer(command string, msg string) (string, *tgbotapi.ReplyK
 			answ := `Спасибо, что спросил. 
 				Мои дела прекрасны, а общение с тобой делает их ещё лучше. 
 				Кстати, раз мы перешли к более тёплому общению, расскажи мне о себе`
-			p.sost[0] = 2
-			p.sost[1] = 4
+			p.sost[0] = 0
+			p.sost[1] = 0
 
 			return answ, &butKeyboard, nil
 		}
