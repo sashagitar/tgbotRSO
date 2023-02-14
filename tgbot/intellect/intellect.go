@@ -87,7 +87,7 @@ func (p *Params) getInfo(msg string) (string, *tgbotapi.ReplyKeyboardMarkup, err
 		Каждое направление профильных отрядов занимается чем-то особенным. Раньше медицинские отряды тоже были профильным направлением, но со временем количество бойцов СМО увеличилось и их вывели в отдельное направление.`, nil, nil
 	case msg == "А что там можно было спросить раньше?":
 		answ := `Вот вопросики, к которым тебе захотелось вернуться. Задавай, а я отвечу:`
-		p.sost[0] = 0
+		p.sost[0] = 1
 		p.sost[1] = 0
 
 		return answ, p.baseKeyboard(), nil
@@ -109,7 +109,7 @@ func (p *Params) getInfoForZnam(msg string) (string, *tgbotapi.ReplyKeyboardMark
 	}
 	if msg == "А что там можно было спросить раньше?" {
 		answ := `Вот вопросики, к которым тебе захотелось вернуться. Задавай, а я отвечу:`
-		p.sost[0] = 0
+		p.sost[0] = 1
 		p.sost[1] = 0
 
 		return answ, p.baseKeyboard(), nil
@@ -210,14 +210,14 @@ func (p *Params) lvl2(msg string) (string, *tgbotapi.ReplyKeyboardMarkup, error)
 			
 			Я могу рассказать про каждое направление немного подробнее 
 			Напиши их краткое название (то что в скобочках)`
-		p.sost[0] = 2
+		p.sost[0] = 3
 		p.sost[1] = 1
 
 		return answ, &butKeyboard, nil
 
 	case msg == "А что там можно было спросить раньше?":
 		answ := `Вот вопросики, к которым тебе захотелось вернуться. Задавай, а я отвечу:`
-		p.sost[0] = 0
+		p.sost[0] = 1
 		p.sost[1] = 0
 
 		return answ, p.baseKeyboard(), nil
@@ -228,6 +228,12 @@ func (p *Params) lvl2(msg string) (string, *tgbotapi.ReplyKeyboardMarkup, error)
 
 // Основна диалога
 func (p *Params) GetAnswer(command string, msg string) (string, *tgbotapi.ReplyKeyboardMarkup, error) {
+	//Возрождаем бота, если он застрял
+	if msg == "Всё плохо, давай сначала" {
+		p.sost[0] = 0
+		p.sost[1] = 0
+	}
+
 	// если уровень дерева 3 идём в нужную ветку
 	if p.sost[0] == 3 {
 		if p.sost[1] == 1 {
@@ -324,7 +330,7 @@ func (p *Params) GetAnswer(command string, msg string) (string, *tgbotapi.ReplyK
 			answ := `Спасибо, что спросил. 
 				Мои дела прекрасны, а общение с тобой делает их ещё лучше. 
 				Кстати, раз мы перешли к более тёплому общению, расскажи мне о себе`
-			p.sost[0] = 0
+			p.sost[0] = 1
 			p.sost[1] = 0
 
 			return answ, &butKeyboard, nil
