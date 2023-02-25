@@ -9,7 +9,7 @@ import (
 
 // Интерфейс интелекта
 type com interface {
-	GetAnswer(command string, msg string) (intellect.answer, *tgbotapi.ReplyKeyboardMarkup, tgbotapi.PhotoConfig, error)
+	GetAnswer(command string, msg string) (*string, *tgbotapi.ReplyKeyboardMarkup, *tgbotapi.PhotoConfig, error)
 }
 
 // адаптер интелекта
@@ -43,7 +43,7 @@ func Create(api string) (*Bot, error) {
 }
 
 // Отправка сообщения пользователю
-func (b *Bot) sendAnswer(id_user int, answer *string, buttonKeybord *tgbotapi.ReplyKeyboardMarkup, photo tgbotapi.PhotoConfig) {
+func (b *Bot) sendAnswer(id_user int, answer *string, buttonKeybord *tgbotapi.ReplyKeyboardMarkup, photo *tgbotapi.PhotoConfig) {
 	if photo != nil {
 		photo.Caption = *answer
 		b.bot.Send(photo)
@@ -80,10 +80,10 @@ func (b *Bot) Run() {
 		}
 
 		// Отправляем сообщение интелекту
-		answer, butKeyboard, photo, err := b.users_bot_tupoi[id_user].intellect.GetAnswer(command, msg_user)
+		ans_wer, butKeyboard, photo, err := b.users_bot_tupoi[id_user].intellect.GetAnswer(command, msg_user)
 
 		log.Printf("[%d] com %s, msg %s, %s", id_user, name_user, command, msg_user, err)
 
-		b.sendAnswer(id_user, &answer, butKeyboard, photo)
+		b.sendAnswer(id_user, ans_wer, butKeyboard, photo)
 	}
 }

@@ -53,7 +53,7 @@ var errmsg = answer{
 		tgbotapi.NewKeyboardButtonRow(
 			tgbotapi.NewKeyboardButton("Что такое педагогический отряд?"),
 		)),
-	photo: &tgbotapi.NewPhoto(update.Message.From.ID, tgbotapi.FilePath("photos/DvijFace1.png"))}
+	photo: nil}
 
 // Сообщения-ответы:
 var help = answer{
@@ -72,7 +72,7 @@ var help = answer{
 		tgbotapi.NewKeyboardButtonRow(
 			tgbotapi.NewKeyboardButton("Что такое педагогический отряд?"),
 		)),
-	photo:/*&tgbotapi.NewPhoto(update.Message.From.ID, tgbotapi.FilePath("maxresdefault.jpg"))*/ nil}
+	photo:/*&tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("maxresdefault.jpg"))*/ nil}
 var SSO = answer{
 	text: `Я состою в педагогическом отряде, поэтому мало знаю про строительные. 
 		
@@ -343,36 +343,78 @@ func Create(id_user int64) *Params {
 		br04: make(map[string]answer, 0),
 		br05: make(map[string]answer, 0),
 		br06: make(map[string]answer, 0),
-		br07: make(map[string]answer, 0),
-		br08: make(map[string]answer, 0),
-		br09: make(map[string]answer, 0),
-		br10: make(map[string]answer, 0),
-		br11: make(map[string]answer, 0),
-		br12: make(map[string]answer, 0),
-		br13: make(map[string]answer, 0),
-		br14: make(map[string]answer, 0),
-		br15: make(map[string]answer, 0),
-		br16: make(map[string]answer, 0),
-		br17: make(map[string]answer, 0),
 	}
-	log.br01["Что такое отряды?"] = RSD
-	log.br02["Что значит Сводный отряд?"] = Svodniy
-	log.br03["Что такое педагогический отряд?"] = SPO
-	log.br04["Какие есть отряды?"] = Detouchments
-	log.br05["В каких лагерях работают Движники?"] = Camps
-	log.br06["Расскажи больше про РСО"] = MoreRSD
-	log.br07["Какие знамёна есть у Движников?"] = Znamea
-	log.br08["ССО"] = SSO
-	log.br09["СПО"] = SPO
-	log.br10["СОП"] = SOP
-	log.br11["ССервО"] = SServO
-	log.br12["ССхО"] = SShO
-	log.br13["СОП"] = SOP
-	log.br14["ТОП"] = TOP
-	log.br15["ПСО"] = PSO
-	log.br16["Расскажи больше про твой отряд"] = Dvijniki
-	log.br17["Расскажи историю РСО"] = History
+	ph := tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	help.photo = &ph
+	log.br06["Всё плохо, давай сначала"] = help
 
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	RSD.photo = &ph
+	log.br01["Что такое отряды?"] = RSD
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	Svodniy.photo = &ph
+	log.br01["Что значит Сводный отряд?"] = Svodniy
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	SPO.photo = &ph
+	log.br01["Что такое педагогический отряд?"] = SPO
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	Detouchments.photo = &ph
+	log.br02["Какие есть отряды?"] = Detouchments
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	History.photo = &ph
+	log.br02["Расскажи историю РСО"] = History
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	MoreRSD.photo = &ph
+	log.br02["Расскажи больше про РСО"] = MoreRSD
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	Dvijniki.photo = &ph
+	log.br03["Расскажи больше про твой отряд"] = Dvijniki
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	Znamea.photo = &ph
+	log.br03["Какие знамёна есть у Движников?"] = Znamea
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	Camps.photo = &ph
+	log.br04["В каких лагерях работают Движники?"] = Camps
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	SSO.photo = &ph
+	log.br05["ССО"] = SSO
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	SPO.photo = &ph
+	log.br05["СПО"] = SPO
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	SOP.photo = &ph
+	log.br05["СОП"] = SOP
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	SServO.photo = &ph
+	log.br05["ССервО"] = SServO
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	SShO.photo = &ph
+	log.br05["ССхО"] = SShO
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	SMO.photo = &ph
+	log.br05["СМО"] = SMO
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	TOP.photo = &ph
+	log.br05["ТОП"] = TOP
+
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	PSO.photo = &ph
+	log.br05["ПСО"] = PSO
 	return p
 }
 
@@ -381,14 +423,43 @@ func Create(id_user int64) *Params {
  вертуть третьим аргументом
 */
 // основа диалога
-func (p *Params) GetAnswer(command string, msg string) (answer, *tgbotapi.ReplyKeyboardMarkup, *tgbotapi.PhotoConfig, error) {
-	//Возрождаем бота, если он застрял
-	if msg == "Всё плохо, давай сначала" {
-
+func (p *Params) GetAnswer(command string, msg string) (*string, *tgbotapi.ReplyKeyboardMarkup, *tgbotapi.PhotoConfig, error) {
+	// если уровень дерева 3 идём в нужную ветку
+	if p.sost[0] == 3 {
+		if p.sost[1] == 1 {
+			return p.getInfo(msg)
+		}
+		if p.sost[1] == 2 {
+			return p.getInfoForZnam(msg)
+		}
 	}
-	if msg == "Кто тебя создал?" {
-
+	// если уровень дерева 2 идём в древо диалогов второго уровня
+	if p.sost[0] == 2 {
+		ans, ok = p.logica.br02[msg]
+		if ok {
+			return ans.text, ans.keyboard, ans.photo, nil
+		}
 	}
 
-	return errmsg, nil, nil, nil
+	// Главное меню
+	if p.sost[0] == 1 {
+		switch msg {
+		// сравниваем ответ
+		case "Что такое отряды?":
+
+		case "Что значит сводный отряд?":
+
+		case "Что такое педагогический отряд?":
+
+		case "Как твои дела, Движ?":
+		}
+	}
+	// Начало диалога // Главное меню
+	if p.sost[0] == 0 {
+		p.sost[0] = 1
+	}
+
+	return help, p.baseKeyboard(), nil, nil
+
+	return &errmsg.text, nil, nil, nil
 }
