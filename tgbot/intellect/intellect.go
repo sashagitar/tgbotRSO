@@ -348,71 +348,71 @@ func Create(id_user int64) *Params {
 	help.photo = &ph
 	log.br06["Всё плохо, давай сначала"] = help
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/Dvij3.png"))
 	RSD.photo = &ph
 	log.br01["Что такое отряды?"] = RSD
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijJumps.png"))
 	Svodniy.photo = &ph
 	log.br01["Что значит Сводный отряд?"] = Svodniy
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijMic.png"))
 	SPO.photo = &ph
 	log.br01["Что такое педагогический отряд?"] = SPO
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijReads.png"))
 	Detouchments.photo = &ph
 	log.br02["Какие есть отряды?"] = Detouchments
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijBook.png"))
 	History.photo = &ph
 	log.br02["Расскажи историю РСО"] = History
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijMistery.png"))
 	MoreRSD.photo = &ph
 	log.br02["Расскажи больше про РСО"] = MoreRSD
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijLoves.png"))
 	Dvijniki.photo = &ph
 	log.br03["Расскажи больше про твой отряд"] = Dvijniki
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/Znamea.jpg"))
 	Znamea.photo = &ph
 	log.br03["Какие знамёна есть у Движников?"] = Znamea
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijWeCanDoIt.png"))
 	Camps.photo = &ph
 	log.br04["В каких лагерях работают Движники?"] = Camps
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/Dvij3.png"))
 	SSO.photo = &ph
 	log.br05["ССО"] = SSO
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/Dvij4.png"))
 	SPO.photo = &ph
 	log.br05["СПО"] = SPO
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/Dvij5.png"))
 	SOP.photo = &ph
 	log.br05["СОП"] = SOP
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijEats.png"))
 	SServO.photo = &ph
 	log.br05["ССервО"] = SServO
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijGlasses.png"))
 	SShO.photo = &ph
 	log.br05["ССхО"] = SShO
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijSickness.png"))
 	SMO.photo = &ph
 	log.br05["СМО"] = SMO
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijLaugh.png"))
 	TOP.photo = &ph
 	log.br05["ТОП"] = TOP
 
-	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/DvijFace1.png"))
+	ph = tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("photos/Dvij6.png"))
 	PSO.photo = &ph
 	log.br05["ПСО"] = PSO
 	return p
@@ -437,7 +437,7 @@ func (p *Params) GetAnswer(command string, msg string) (*string, *tgbotapi.Reply
 	if p.sost[0] == 2 {
 		ans, ok = p.logica.br02[msg]
 		if ok {
-			return ans.text, ans.keyboard, ans.photo, nil
+			return answer.text, answer.keyboard, answer.photo, nil
 		}
 	}
 
@@ -445,9 +445,9 @@ func (p *Params) GetAnswer(command string, msg string) (*string, *tgbotapi.Reply
 	if p.sost[0] == 1 {
 		switch msg {
 		// сравниваем ответ
-		case "Что такое отряды?":
+		case "Что такое отряды?": { = p.logica.br01}
 
-		case "Что значит сводный отряд?":
+		case "Что значит сводный отряд?": {answer = Svodniy}
 
 		case "Что такое педагогический отряд?":
 
@@ -459,7 +459,7 @@ func (p *Params) GetAnswer(command string, msg string) (*string, *tgbotapi.Reply
 		p.sost[0] = 1
 	}
 
-	return help, p.baseKeyboard(), nil, nil
+	return &help.text, p.baseKeyboard(), nil, nil
 
 	return &errmsg.text, nil, nil, nil
 }
