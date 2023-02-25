@@ -6,8 +6,8 @@ import (
 	"github.com/sashagitar/tgbotDime/tgbot"
 )
 
-const api_tg_my = " "
-const api_tg = " "
+const api_tg_my = ""
+const api_tg = ""
 
 func main() {
 	fmt.Printf("%s\n", api_tg)

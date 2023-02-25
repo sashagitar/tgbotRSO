@@ -11,6 +11,7 @@ import (
 type Params struct {
 	id_user int64
 	sost    []int
+	photo   *tgbotapi.PhotoConfig
 }
 
 // Сообщение при нестандартном вводе
@@ -24,7 +25,10 @@ var help = `Привет! Меня зовут Движ.
 
 // Создание интелекта
 func Create(id_user int64) *Params {
-	return &Params{id_user: id_user, sost: []int{0, 0}}
+	p := &Params{id_user: id_user, sost: []int{0, 0}}
+	ph := tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("jkkjk"))
+	p.photo = &ph
+	return p
 }
 
 // Клавиатура кнопок главного меню
