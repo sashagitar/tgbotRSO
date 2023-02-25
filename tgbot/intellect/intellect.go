@@ -11,25 +11,39 @@ import (
 type Params struct {
 	id_user int64
 	sost    []int
+	logica  logical
+}
+
+type answer struct {
+	text     string
+	keyboard tgbotapi.ReplyKeyboardMarkup
+	photo    *tgbotapi.PhotoConfig
+}
+
+type logical struct {
+	br01 map[string]answer
+	br02 map[string]answer
+	br03 map[string]answer
+	br04 map[string]answer
+	br05 map[string]answer
+	br06 map[string]answer
+	br07 map[string]answer
+	br08 map[string]answer
+	br09 map[string]answer
+	br10 map[string]answer
+	br11 map[string]answer
+	br12 map[string]answer
+	br13 map[string]answer
+	br14 map[string]answer
+	br15 map[string]answer
+	br16 map[string]answer
+	br17 map[string]answer
 }
 
 // Сообщение при нестандартном вводе
-var errmsg = `К сожалению, ответа на этот вопрос я пока не знаю. Попробуй задать его своим кураторам или командному составу. Уверен, они с радостью помогут тебе!`
-
-// Приветственное сообщение
-var help = `Привет! Меня зовут Движ. 
-Я здесь для того, чтобы рассказать тебе про мой любимый отряд — Сводный студенческий педагогический отряд «Движники».  
-
-Про что ты хочешь узнать подробнее?`
-
-// Создание интелекта
-func Create(id_user int64) *Params {
-	return &Params{id_user: id_user, sost: []int{0, 0}}
-}
-
-// Клавиатура кнопок главного меню
-func (p *Params) baseKeyboard() *tgbotapi.ReplyKeyboardMarkup {
-	k := tgbotapi.NewReplyKeyboard(
+var errmsg = answer{
+	text: `К сожалению, ответа на этот вопрос я пока не знаю. Попробуй задать его своим кураторам или командному составу. Уверен, они с радостью помогут тебе!`,
+	keyboard: tgbotapi.NewReplyKeyboard(
 		tgbotapi.NewKeyboardButtonRow(
 			tgbotapi.NewKeyboardButton("Что такое отряды?"),
 		),
@@ -38,312 +52,343 @@ func (p *Params) baseKeyboard() *tgbotapi.ReplyKeyboardMarkup {
 		),
 		tgbotapi.NewKeyboardButtonRow(
 			tgbotapi.NewKeyboardButton("Что такое педагогический отряд?"),
+		)),
+	photo: &tgbotapi.NewPhoto(update.Message.From.ID, tgbotapi.FilePath("photos/DvijFace1.png"))}
+
+// Сообщения-ответы:
+var help = answer{
+
+	text: `Привет! Меня зовут Движ. 
+ Я здесь для того, чтобы рассказать тебе про мой любимый отряд — Сводный студенческий педагогический отряд «Движники».  
+
+ Про что ты хочешь узнать подробнее?`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Что такое отряды?"),
 		),
 		tgbotapi.NewKeyboardButtonRow(
-			tgbotapi.NewKeyboardButton("Как твои дела, Движ?"),
-		))
-	return &k
-}
-
-// Возвращает информацию по поределённому отряду 3-ий уровень дерева 1 ветка
-func (p *Params) getInfo(msg string) (string, *tgbotapi.ReplyKeyboardMarkup, error) {
-	switch {
-	case msg == "ССО":
-		return `Я состою в педагогическом отряде, поэтому мало знаю про строительные. 
+			tgbotapi.NewKeyboardButton("Что значит сводный отряд?"),
+		),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Что такое педагогический отряд?"),
+		)),
+	photo:/*&tgbotapi.NewPhoto(update.Message.From.ID, tgbotapi.FilePath("maxresdefault.jpg"))*/ nil}
+var SSO = answer{
+	text: `Я состою в педагогическом отряде, поэтому мало знаю про строительные. 
 		
-Знаю, что они работают на стройках по всей России и иногда даже за её пределами. 
-Строительные отряды покоряют такие грандиозные объекты, как стройки проекта Мирный атом, Космодром Восточный. 
-Именно со Строительных отрядов началась история РСО. 
-Прежде чем выехать на целину, каждый отряд получает полезную строительную специальность, а потом работает в соответствии с нею`, nil, nil
-	case msg == "СПО":
-		return `Педагогческие отряды занимают самое большое место в моём электронном сердечке.
+ Знаю, что они работают на стройках по всей России и иногда даже за её пределами. 
+ Строительные отряды покоряют такие грандиозные объекты, как стройки проекта Мирный атом, Космодром Восточный. 
+ Именно со Строительных отрядов началась история РСО. 
+ Прежде чем выехать на целину, каждый отряд получает полезную строительную специальность, а потом работает в соответствии с нею`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССО"),
+			tgbotapi.NewKeyboardButton("СПО"),
+			tgbotapi.NewKeyboardButton("ССхО"),
+			tgbotapi.NewKeyboardButton("СОП")),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССервО"),
+			tgbotapi.NewKeyboardButton("СМО"),
+			tgbotapi.NewKeyboardButton("ТОП"),
+			tgbotapi.NewKeyboardButton("ПСО"),
+		)),
+	photo: nil}
+
+var SPO = answer{
+	text: `Педагогческие отряды занимают самое большое место в моём электронном сердечке.
+
+ Участники педагогических отрядов работают с детьми. В основном в лагерях в самых разных уголках России. Вожатые, организаторы, сопровождающие. 
+ Конечно же этим деятельность педагогических отрядов не ограничивается, но это, можно сказать, основные их задачи.`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССО"),
+			tgbotapi.NewKeyboardButton("СПО"),
+			tgbotapi.NewKeyboardButton("ССхО"),
+			tgbotapi.NewKeyboardButton("СОП")),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССервО"),
+			tgbotapi.NewKeyboardButton("СМО"),
+			tgbotapi.NewKeyboardButton("ТОП"),
+			tgbotapi.NewKeyboardButton("ПСО"),
+		)),
+	photo: nil}
+var SOP = answer{
+	text: `Я состою в педагогическом отряде, поэтому мало знаю про отряды проводников. 
 		
-`, nil, nil
-	case msg == "ССхО":
-		return `Я состою в педагогическом отряде, поэтому мало знаю про сельскохозяйственные. 
+ Знаю, что они работают в поездах по всей России. 
+ Без проводников не могла бы существовать железная дорога.`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССО"),
+			tgbotapi.NewKeyboardButton("СПО"),
+			tgbotapi.NewKeyboardButton("ССхО"),
+			tgbotapi.NewKeyboardButton("СОП")),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССервО"),
+			tgbotapi.NewKeyboardButton("СМО"),
+			tgbotapi.NewKeyboardButton("ТОП"),
+			tgbotapi.NewKeyboardButton("ПСО"),
+		)),
+	photo: nil}
+var SShO = answer{
+	text: `Я состою в педагогическом отряде, поэтому мало знаю про сельскохозяйственные. 
 		
-Знаю, что сельскохозяйственные отряды работаю в полях, садах и на фермах по всей России. 
-Они работают и с растениями и с животными.`, nil, nil
-	case msg == "СОП":
-		return `Я состою в педагогическом отряде, поэтому мало знаю про отряды проводников. 
+ Знаю, что сельскохозяйственные отряды работаю в полях, садах и на фермах по всей России. 
+ Они работают и с растениями и с животными.`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССО"),
+			tgbotapi.NewKeyboardButton("СПО"),
+			tgbotapi.NewKeyboardButton("ССхО"),
+			tgbotapi.NewKeyboardButton("СОП")),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССервО"),
+			tgbotapi.NewKeyboardButton("СМО"),
+			tgbotapi.NewKeyboardButton("ТОП"),
+			tgbotapi.NewKeyboardButton("ПСО"),
+		)),
+	photo: nil}
+var SServO = answer{
+	text: `Я состою в педагогическом отряде, поэтому мало знаю про сервисные. 
 		
-Знаю, что они работают в поездах по всей России. 
-Без проводников не могла бы существовать железная дорога.`, nil, nil
-	case msg == "ССервО":
-		return `Я состою в педагогическом отряде, поэтому мало знаю про сервисные. 
+ Знаю, что они работают по всей России. 
+ Некоторые из них работают бариста, другие спасателями, третьи горничными, поворами, официантами, всего и не перечислишь.`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССО"),
+			tgbotapi.NewKeyboardButton("СПО"),
+			tgbotapi.NewKeyboardButton("ССхО"),
+			tgbotapi.NewKeyboardButton("СОП")),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССервО"),
+			tgbotapi.NewKeyboardButton("СМО"),
+			tgbotapi.NewKeyboardButton("ТОП"),
+			tgbotapi.NewKeyboardButton("ПСО"),
+		)),
+	photo: nil}
+var SMO = answer{
+	text: `Я состою в педагогическом отряде, поэтому мало знаю про медицинские. 
 		
-Знаю, что они работают по всей России. 
-Некоторые из них работают бариста, другие спасателями, третьи горничными, поворами, официантами, всего и не перечислишь.`, nil, nil
-	case msg == "СМО":
-		return `Я состою в педагогическом отряде, поэтому мало знаю про медицинские. 
+ Знаю, что попасть туда могут только студенты медицинских вузов или имеющие медицинское образование. 
+ Они работают в поликлинках и больницах по всей России, медиками на различных трудовых проектах и много где ещё.`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССО"),
+			tgbotapi.NewKeyboardButton("СПО"),
+			tgbotapi.NewKeyboardButton("ССхО"),
+			tgbotapi.NewKeyboardButton("СОП")),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССервО"),
+			tgbotapi.NewKeyboardButton("СМО"),
+			tgbotapi.NewKeyboardButton("ТОП"),
+			tgbotapi.NewKeyboardButton("ПСО"),
+		)),
+	photo: nil}
+var TOP = answer{
+	text: `Трудовые отряды подростков созданы для того, чтобы несовершеннолетние ребята, жаждущие трудиться, могли направить свою энергию. 
+ Чаще всего ТОПы прикрепляются к какому-то линейному студенческому отряду и работают по его направлению. 
+ У Сводного СПО  «Движники» есть такой младший брат - ТОП «Блеск»`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССО"),
+			tgbotapi.NewKeyboardButton("СПО"),
+			tgbotapi.NewKeyboardButton("ССхО"),
+			tgbotapi.NewKeyboardButton("СОП")),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССервО"),
+			tgbotapi.NewKeyboardButton("СМО"),
+			tgbotapi.NewKeyboardButton("ТОП"),
+			tgbotapi.NewKeyboardButton("ПСО"),
+		)),
+	photo: nil}
+var PSO = answer{
+	text: `К профильным студенческим отрядам относятся отряды археологов, энергетические отряды, путийные отряды. 
 		
-Знаю, что попасть туда могут только студенты медицинских вузов или имеющие медицинское образование. 
-Они работают в поликлинках и больницах по всей России, медиками на различных трудовых проектах и много где ещё.`, nil, nil
-	case msg == "ТОП":
-		return `Трудовые отряды подростков созданы для того, чтобы несовершеннолетние ребята, жаждущие трудиться, могли направить свою энергию. 
-Чаще всего ТОПы прикрепляются к какому-то линейному студенческому отряду и работают по его направлению. 
-У Сводного СПО  «Движники» есть такой младший брат - ТОП «Блеск»`, nil, nil
-	case msg == "ПСО":
-		return `К профильным студенческим отрядам относятся отряды археологов, энергетические отряды, путийные отряды. 
+ Каждое направление профильных отрядов занимается чем-то особенным. Раньше медицинские отряды тоже были профильным направлением, но со временем количество бойцов СМО увеличилось и их вывели в отдельное направление.`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССО"),
+			tgbotapi.NewKeyboardButton("СПО"),
+			tgbotapi.NewKeyboardButton("ССхО"),
+			tgbotapi.NewKeyboardButton("СОП")),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССервО"),
+			tgbotapi.NewKeyboardButton("СМО"),
+			tgbotapi.NewKeyboardButton("ТОП"),
+			tgbotapi.NewKeyboardButton("ПСО"),
+		)),
+	photo: nil}
+var Znamea = answer{
+	text: `В 2020 году «Движники» получили знамя лучшего студенческого отряда Москвы по комиссарской деятельности
+
+ В 2021 году «Движники» получили знамя лучшего студенческого отряда Москвы по совокупности показателей
 		
-Каждое направление профильных отрядов занимается чем-то особенным. Раньше медицинские отряды тоже были профильным направлением, но со временем количество бойцов СМО увеличилось и их вывели в отдельное направление.`, nil, nil
-	case msg == "А что там можно было спросить раньше?":
-		answ := `Вот вопросики, к которым тебе захотелось вернуться. Задавай, а я отвечу:`
-		p.sost[0] = 1
-		p.sost[1] = 0
-
-		return answ, p.baseKeyboard(), nil
-	}
-
-	return errmsg, nil, nil
-}
-
-// Возвращает информацию о знамёнах 3-ий уровень дерева 2 ветка
-func (p *Params) getInfoForZnam(msg string) (string, *tgbotapi.ReplyKeyboardMarkup, error) {
-	if msg == "Какие знамёна есть у «Движников»?" {
-		answ := `В 2020 году «Движники» получили знамя лучшего студенческого отряда Москвы по комиссарской деятельности
-
-В 2021 году «Движники» получили знамя лучшего студенческого отряда Москвы по совокупности показателей
+ А в 2022 году «Движники» смогли взять два знамени - лучшего студенческого педагогического отряда Москвы и Лучшего студенческого отряда Москвы по совокупности показателей`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Круть!"))),
+	photo: nil}
+var History = answer{
+	text: `История Российских студенческих отрядов берёт своё начало летом 1959 года, когда 339 студентов физического факультета МГУ отправились покорять целину в Казахстане, где построили 16 объектов.
 		
-А в 2022 году «Движники» смогли взять два знамени - лучшего студенческого педагогического отряда Москвы и Лучшего студенческого отряда Москвы по совокупности показателей`
+ С тех пор организация начала стремительно развиваться. Уже через 5 лет в 1964 году в строительных отрядах было уже 30 тысяч молодых энтузиастов, представителей 9 союзных республик, 41 города, 178 высших учебных заведений. Было построено 3860 объектов, организовано более 3 тысяч концертов, прочитано 5 тысяч лекций для сельских тружеников.
 
-		return answ, nil, nil
-	}
-	if msg == "А что там можно было спросить раньше?" {
-		answ := `Вот вопросики, к которым тебе захотелось вернуться. Задавай, а я отвечу:`
-		p.sost[0] = 1
-		p.sost[1] = 0
+ На пике своего развития в Советский период Российские студенческие отряды стали домом для  более 860 тысяч человек. А всего с 1959 по 1991 года частью РСО побывали более 13 миллионов человек. 
 
-		return answ, p.baseKeyboard(), nil
-	}
-
-	return help, nil, nil
-}
-
-// Воторой уровень дерева базовые вопросы и ответы
-func (p *Params) lvl2(msg string) (string, *tgbotapi.ReplyKeyboardMarkup, error) {
-	switch {
-	case msg == "Расскажи больше про РСО":
-		butKeyboard := tgbotapi.NewReplyKeyboard(
-			tgbotapi.NewKeyboardButtonRow(
-				tgbotapi.NewKeyboardButton("Какие знамёна есть у «Движников»?"),
-			),
-			tgbotapi.NewKeyboardButtonRow(
-				tgbotapi.NewKeyboardButton("А что там можно было спросить раньше?"),
-			),
-		)
-		answ := `Полное название организации - Молодёжная 
-общероссийская общественная организация Российские студенческие отряды (МООО «РСО»). 
-Это крупнейшая молодёжная организация России, объединяющая более 150 тысяч молодых людей из 76 субъектов страны.
+ Движение возродилось в 2004 году. В 2015 году указом президента РФ В. Путина был установлен профессиональный праздник - День Российских Студенческих Отрядов, отмечаемый 17 февраля.`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Круть!"))),
+	photo: nil}
+var Dvijniki = answer{
+	text: `Сводный студенческий педагогический отряд был создан в 2017 году студентами, выезжающими вожатыми в лагерь «Бугорок». Днём рождения отряда считается 5 марта.
+ Первым командиром СПО «Движники» стала Белокрылова Наталья Витальевна.
 		
-РСО предоставляет студентом огромное количество возможностей для самореализации. 
-Ежегодно проводятся конкурсы профмастерства, а лучшие отряды получат знамёна (кстати, у «Движников» тоже есть знамёна). 
-Кроме профессиональных навыков можно испытать себя и в творчестве - на творческих конкурсах - и в спорте - на спартакиадах.`
-		p.sost[0] = 3
-		p.sost[1] = 2
-
-		return answ, &butKeyboard, nil
-
-	case msg == "Расскажи историю РСО":
-		answ := `История Российских студенческих отрядов берёт своё начало летом 1959 года, когда 339 студентов физического факультета МГУ отправились покорять целину в Казахстане, где построили 16 объектов.
-		
-С тех пор организация начала стремительно развиваться. Уже через 5 лет в 1964 году в строительных отрядах было уже 30 тысяч молодых энтузиастов, представителей 9 союзных республик, 41 города, 178 высших учебных заведений. Было построено 3860 объектов, организовано более 3 тысяч концертов, прочитано 5 тысяч лекций для сельских тружеников.
-
-На пике своего развития в Советский период Российские студенческие отряды стали домом для  более 860 тысяч человек. А всего с 1959 по 1991 года частью РСО побывали более 13 миллионов человек. 
-
-Движение возродилось в 2004 году. В 2015 году указом президента РФ В. Путина был установлен профессиональный праздник - День Российских Студенческих Отрядов, отмечаемый 17 февраля.`
-
-		return answ, nil, nil
-
-	case msg == "Расскажи больше про твой отряд":
-		answ := `Сводный студенческий педагогический отряд был создан в 2017 году студентами, выезжающими вожатыми в лагерь «Бугорок». Днём рождения отряда считается 5 марта.
-Первым командиром СПО «Движники» стала Белокрылова Наталья Витальевна.
-		
-Сегодня в отряде состоит 25 человек.
-Командир отряда - Шелепа Марина.
-Комиссар отряда - Казмалы Даша.
-Методист отряда - Пашечко Женя. 
-Медик отряда - Белкина Олеся.
-Руководитель PR отдела - Кириленко Лена.
+ Сегодня в отряде состоит 25 человек.
+ Командир отряда - Шелепа Марина.
+ Комиссар отряда - Казмалы Даша.
+ Методист отряда - Пашечко Женя. 
+ Медик отряда - Белкина Олеся.
+ Руководитель PR отдела - Кириленко Лена.
 	
-Движники становятся организаторами на многих массовых мерпориятиях, в которых принимает участие РСО.
-Например, многие Движники принимают участие в организации Школы вожатых, в организации форумов. 
+ Движники становятся организаторами на многих массовых мерпориятиях, в которых принимает участие РСО.
+ Например, многие Движники принимают участие в организации Школы вожатых, в организации форумов. 
 
-Каждую зиму бойцы отряда выезжают участниками Всероссийской патриотической акции Снежный десант РСО.
-На данный момент наши бойцы состоят в отрядах Снежного десанта «Клюква», «Пламя», «Буря», «Белое золото»
+ Каждую зиму бойцы отряда выезжают участниками Всероссийской патриотической акции Снежный десант РСО.
+ На данный момент наши бойцы состоят в отрядах Снежного десанта «Клюква», «Пламя», «Буря», «Белое золото»
 	
-И всё это - только верхушка айсберга. Гораздо больше ты узнаешь, когда станешь частью нашей семьи. А пока можешь изучить нашу страничку в социальной сети Вконтакте https://vk.com/spodvijnik1 или в мессенджере телеграм t.me/dvizhniki`
-
-		return answ, nil, nil
-
-	case msg == "В каких лагерях работают Движники?":
-		answ := `Движники работают во многих лагерях. Этим летом, например, мы выезжали в «Бугорок», «Салют», «Планета Английского», «SportZania», «Химик» `
-
-		return answ, nil, nil
-
-	case msg == "Какие есть отряды?" || msg == "А какие ещё бывают отряды?":
-		butKeyboard := tgbotapi.NewReplyKeyboard(
-			tgbotapi.NewKeyboardButtonRow(
-				tgbotapi.NewKeyboardButton("ССО"),
-				tgbotapi.NewKeyboardButton("СПО"),
-				tgbotapi.NewKeyboardButton("ССхО"),
-				tgbotapi.NewKeyboardButton("СОП")),
-			tgbotapi.NewKeyboardButtonRow(
-				tgbotapi.NewKeyboardButton("ССервО"),
-				tgbotapi.NewKeyboardButton("СМО"),
-				tgbotapi.NewKeyboardButton("ТОП"),
-				tgbotapi.NewKeyboardButton("ПСО"),
-			),
-			tgbotapi.NewKeyboardButtonRow(
-				tgbotapi.NewKeyboardButton("А что там можно было спросить раньше?"),
-			),
-		)
-		answ := `В Российских студенческих отрядах существует 8 основных направлений:
-- Строительные отряды (ССО)
-- Педагогические отряды (СПО)
-- Сельскохозяйственные отряды (ССхО)
-- Отряды проводников (СОП)
-- Сервисные отряды (Серво)
-- Медицинские отряды (СМО)
-- Трудовые отряды подростков (ТОП)
-- Профильные студенческие отряды(ПСО)
-Каждое из направлений занимается чем-то своим.
+ И всё это - только верхушка айсберга. Гораздо больше ты узнаешь, когда станешь частью нашей семьи. А пока можешь изучить нашу страничку в социальной сети Вконтакте https://vk.com/spodvijnik1 или в мессенджере телеграм t.me/dvizhniki.`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("В каких лагерях работают Движники?")),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Какие знамёна есть у Движников?"))),
+	photo: nil}
+var Camps = answer{
+	text: `Движники работают во многих лагерях. Этим летом, например, мы выезжали в «Бугорок», «Салют», «Планета Английского», «SportZania», «Химик» `,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Круть!"))),
+	photo: nil}
+var Detouchments = answer{
+	text: `В Российских студенческих отрядах существует 8 основных направлений:
+ - Строительные отряды (ССО)
+ - Педагогические отряды (СПО)
+ - Сельскохозяйственные отряды (ССхО)
+ - Отряды проводников (СОП)
+ - Сервисные отряды (Серво)
+ - Медицинские отряды (СМО)
+ - Трудовые отряды подростков (ТОП)
+ - Профильные студенческие отряды(ПСО)
+ Каждое из направлений занимается чем-то своим.
 			
-Я могу рассказать про каждое направление немного подробнее 
-Напиши их краткое название (то что в скобочках)`
-		p.sost[0] = 3
-		p.sost[1] = 1
+ Я могу рассказать про каждое направление немного подробнее 
+ Напиши их краткое название (то что в скобочках)`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССО"),
+			tgbotapi.NewKeyboardButton("СПО"),
+			tgbotapi.NewKeyboardButton("ССхО"),
+			tgbotapi.NewKeyboardButton("СОП")),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("ССервО"),
+			tgbotapi.NewKeyboardButton("СМО"),
+			tgbotapi.NewKeyboardButton("ТОП"),
+			tgbotapi.NewKeyboardButton("ПСО"),
+		)),
+	photo: nil}
+var RSD = answer{
+	text: `В России существует организация, благодаря которой тысячи студентов могут найти себе работу на лето, компанию единомышленников, пространство для творечества и многое другое. 
+ Эта организация называется Российские студенческие отряды (РСО). 
+ Большая организация состоит из множества маленьких ячеек - линейных отрядов.`, //RSD = Russian students detouchments - РСО
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Расскажи больше про отряды"),
+		),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Расскажи историю РСО"),
+		),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Какие направления есть в РСО?"),
+		)),
+	photo: nil}
+var Svodniy = answer{
+	text: `Большинство существующих отрядов прикреплены к какой-либо образовательной организации - их штабу. 
+ Однако кроме них существуют отряды без штаба. Такие отряды называются сводными и именно таким отрядом являются Движники.`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Какие ещё есть отряды?"),
+		),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Расскажи больше про твой отряд"),
+		),
+	),
+	photo: nil}
+var MoreRSD = answer{
+	text: `Полное название организации - Молодёжная общероссийская общественная организация Российские студенческие отряды (МООО «РСО»). Это крупнейшая молодёжная организация России, объединяющая более 150 тысяч молодых людей из 76 субъектов страны.
 
-		return answ, &butKeyboard, nil
+ РСО предоставляет студентом огромное количество возможностей для самореализации. Ежегодно проводятся конкурсы профмастерства, а лучшие отряды получат знамёна (кстати, у «Движников» тоже есть знамёна). Кроме профессиональных навыков можно испытать себя и в творчестве - на творческих конкурсах - и в спорте - на спартакиадах.`,
+	keyboard: tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Какие знамёна есть у Движников?"))),
+	photo: nil}
 
-	case msg == "А что там можно было спросить раньше?":
-		answ := `Вот вопросики, к которым тебе захотелось вернуться. Задавай, а я отвечу:`
-		p.sost[0] = 1
-		p.sost[1] = 0
-
-		return answ, p.baseKeyboard(), nil
+// Создание интелекта
+func Create(id_user int64) *Params {
+	p := &Params{id_user: id_user, sost: []int{0, 0}}
+	log := logical{
+		br01: make(map[string]answer, 0),
+		br02: make(map[string]answer, 0),
+		br03: make(map[string]answer, 0),
+		br04: make(map[string]answer, 0),
+		br05: make(map[string]answer, 0),
+		br06: make(map[string]answer, 0),
+		br07: make(map[string]answer, 0),
+		br08: make(map[string]answer, 0),
+		br09: make(map[string]answer, 0),
+		br10: make(map[string]answer, 0),
+		br11: make(map[string]answer, 0),
+		br12: make(map[string]answer, 0),
+		br13: make(map[string]answer, 0),
+		br14: make(map[string]answer, 0),
+		br15: make(map[string]answer, 0),
+		br16: make(map[string]answer, 0),
+		br17: make(map[string]answer, 0),
 	}
+	log.br01["Что такое отряды?"] = RSD
+	log.br02["Что значит Сводный отряд?"] = Svodniy
+	log.br03["Что такое педагогический отряд?"] = SPO
+	log.br04["Какие есть отряды?"] = Detouchments
+	log.br05["В каких лагерях работают Движники?"] = Camps
+	log.br06["Расскажи больше про РСО"] = MoreRSD
+	log.br07["Какие знамёна есть у Движников?"] = Znamea
+	log.br08["ССО"] = SSO
+	log.br09["СПО"] = SPO
+	log.br10["СОП"] = SOP
+	log.br11["ССервО"] = SServO
+	log.br12["ССхО"] = SShO
+	log.br13["СОП"] = SOP
+	log.br14["ТОП"] = TOP
+	log.br15["ПСО"] = PSO
+	log.br16["Расскажи больше про твой отряд"] = Dvijniki
+	log.br17["Расскажи историю РСО"] = History
 
-	return errmsg, nil, nil
+	return p
 }
 
-// Основна диалога
-func (p *Params) GetAnswer(command string, msg string) (string, *tgbotapi.ReplyKeyboardMarkup, error) {
+/*
+ photo := tgbotapi.NewPhoto(p.id_user, tgbotapi.FilePath("имя картинки"))
+ вертуть третьим аргументом
+*/
+// основа диалога
+func (p *Params) GetAnswer(command string, msg string) (answer, *tgbotapi.ReplyKeyboardMarkup, *tgbotapi.PhotoConfig, error) {
 	//Возрождаем бота, если он застрял
 	if msg == "Всё плохо, давай сначала" {
-		p.sost[0] = 0
-		p.sost[1] = 0
-	}
-
-	// если уровень дерева 3 идём в нужную ветку
-	if p.sost[0] == 3 {
-		if p.sost[1] == 1 {
-			return p.getInfo(msg)
-		}
-		if p.sost[1] == 2 {
-			return p.getInfoForZnam(msg)
-		}
-	}
-	// если уровень дерева 2 идём в древо диалогов второго уровня
-	if p.sost[0] == 2 {
-		return p.lvl2(msg)
-	}
-
-	// Главное меню
-	if p.sost[0] == 1 {
-		switch msg {
-		// сравниваем ответ
-		case "Что такое отряды?":
-			// Создаём клавиатуру
-			butKeyboard := tgbotapi.NewReplyKeyboard(
-				tgbotapi.NewKeyboardButtonRow(
-					tgbotapi.NewKeyboardButton("Расскажи больше про РСО"),
-				),
-				tgbotapi.NewKeyboardButtonRow(
-					tgbotapi.NewKeyboardButton("Расскажи историю РСО"),
-				),
-				tgbotapi.NewKeyboardButtonRow(
-					tgbotapi.NewKeyboardButton("Какие есть отряды?"),
-				),
-				tgbotapi.NewKeyboardButtonRow(
-					tgbotapi.NewKeyboardButton("А что там можно было спросить раньше?"),
-				),
-			)
-			// Записываем ответ
-			answ := `В России существует организация, благодаря которой тысячи студентов могут найти себе работу на лето, компанию единомышленников, пространство для творечества и многое другое. 
-Эта организация называется Российские студенческие отряды (РСО). 
-Большая организация состоит из множества маленьких ячеек - линейных отрядов.`
-			// меняем состояние дерева
-			p.sost[0] = 2
-			p.sost[1] = 1
-
-			// возвращаем ответ и клавиатуру
-			return answ, &butKeyboard, nil
-
-		case "Что значит сводный отряд?":
-			butKeyboard := tgbotapi.NewReplyKeyboard(
-				tgbotapi.NewKeyboardButtonRow(
-					tgbotapi.NewKeyboardButton("А какие ещё бывают отряды?"),
-				),
-				tgbotapi.NewKeyboardButtonRow(
-					tgbotapi.NewKeyboardButton("Расскажи больше про твой отряд"),
-				),
-				tgbotapi.NewKeyboardButtonRow(
-					tgbotapi.NewKeyboardButton("А что там можно было спросить раньше?"),
-				),
-			)
-			answ := `Большинство существующих отрядов прикреплены к какой-либо образовательной организации - их штабу. 
-Однако кроме них существуют отряды без штаба. Такие отряды называются сводными и именно таким отрядом являются Движники.`
-			p.sost[0] = 2
-			p.sost[1] = 2
-
-			return answ, &butKeyboard, nil
-
-		case "Что такое педагогический отряд?":
-			butKeyboard := tgbotapi.NewReplyKeyboard(
-				tgbotapi.NewKeyboardButtonRow(
-					tgbotapi.NewKeyboardButton("А какие ещё бывают отряды?"),
-				),
-				tgbotapi.NewKeyboardButtonRow(
-					tgbotapi.NewKeyboardButton("В каких лагерях работают Движники?"),
-				),
-				tgbotapi.NewKeyboardButtonRow(
-					tgbotapi.NewKeyboardButton("А что там можно было спросить раньше?"),
-				),
-			)
-			answ := `Существуют разные направления отрядов. Каждое направление занимается каким-то своим делом. 
-Участники педагогических отрядов работают с детьми. В основном в лагерях в самых разных уголках России. Вожатые, организаторы, сопровождающие. 
-Конечно же этим деятельность педагогических отрядов не ограничивается, но это, можно сказать, основные их задачи.`
-			p.sost[0] = 2
-			p.sost[1] = 3
-
-			return answ, &butKeyboard, nil
-
-		case "Как твои дела, Движ?":
-			butKeyboard := tgbotapi.NewReplyKeyboard(
-				tgbotapi.NewKeyboardButtonRow(
-					tgbotapi.NewKeyboardButton("Да, с удовольствием расскажу!"),
-				),
-				tgbotapi.NewKeyboardButtonRow(
-					tgbotapi.NewKeyboardButton("Сейчас я не в настроении что-либо рассказывать. Что там было раньше?"),
-				),
-			)
-			answ := `Спасибо, что спросил. 
-Мои дела прекрасны, а общение с тобой делает их ещё лучше. 
-Кстати, раз мы перешли к более тёплому общению, расскажи мне о себе`
-			p.sost[0] = 1
-			p.sost[1] = 0
-
-			return answ, &butKeyboard, nil
-		}
 
 	}
-	// Начало диалога // Главное меню
-	if p.sost[0] == 0 {
-		p.sost[0] = 1
-
-		return help, p.baseKeyboard(), nil
+	if msg == "Кто тебя создал?" {
 
 	}
-	return errmsg, nil, nil
+
+	return errmsg, nil, nil, nil
 }
