@@ -9,7 +9,7 @@ import (
 
 // Интерфейс интелекта
 type com interface {
-	GetAnswer(command string, msg string) (string, *tgbotapi.ReplyKeyboardMarkup, error)
+	GetAnswer(command string, msg string) (*string, *tgbotapi.ReplyKeyboardMarkup, *tgbotapi.PhotoConfig, error)
 }
 
 // адаптер интелекта
@@ -43,10 +43,20 @@ func Create(api string) (*Bot, error) {
 }
 
 // Отправка сообщения пользователю
-func (b *Bot) sendAnswer(id_user int, answer *string, buttonKeybord *tgbotapi.ReplyKeyboardMarkup) {
-	msg := tgbotapi.NewMessage(int64(id_user), *answer)
-	msg.ReplyMarkup = buttonKeybord
-	b.bot.Send(msg)
+func (b *Bot) sendAnswer(id_user int, answer *string, buttonKeybord *tgbotapi.ReplyKeyboardMarkup, photo *tgbotapi.PhotoConfig) {
+	if photo != nil {
+		photo.Caption = *answer
+		photo.ReplyMarkup = buttonKeybord
+		if _, err := b.bot.Send(*photo); err != nil {
+			log.Fatalln(err)
+		}
+
+	} else {
+		msg := tgbotapi.NewMessage(int64(id_user), *answer)
+		msg.ReplyMarkup = buttonKeybord
+		b.bot.Send(msg)
+	}
+
 }
 
 // Запуск бота
@@ -66,6 +76,7 @@ func (b *Bot) Run() {
 		command := update.Message.Command()
 		msg_user := update.Message.Text
 		id_user := int(update.Message.From.ID)
+		name_user := update.Message.From.UserName
 
 		// Если пользователь написал впервые - создаём для него отдеьный объект интелекта
 		if b.users_bot_tupoi[id_user] == nil {
@@ -73,10 +84,10 @@ func (b *Bot) Run() {
 		}
 
 		// Отправляем сообщение интелекту
-		answer, butKeyboard, err := b.users_bot_tupoi[id_user].intellect.GetAnswer(command, msg_user)
+		ans_wer, butKeyboard, photo, err := b.users_bot_tupoi[id_user].intellect.GetAnswer(command, msg_user)
 
-		log.Printf("[%d] com %s, msg %s, %s", id_user, command, msg_user, err)
+		log.Printf("[%d] name %s, com %s, msg %s, %s", id_user, name_user, command, msg_user, err)
 
-		b.sendAnswer(id_user, &answer, butKeyboard)
+		b.sendAnswer(id_user, ans_wer, butKeyboard, photo)
 	}
 }
